@@ -2,12 +2,21 @@ import data from "./test-2.json";
 
 let count = 0;
 
-const boundToRange = (value: number) => {
+const boundToRange = (value: number, previous: number) => {
   if (value < 0) {
-    return boundToRange(value + 100);
+    count += Math.floor(Math.abs(value) / 100);
+    if (previous > 0) {
+      count++;
+    }
+    return ((value % 100) + 100) % 100;
   } else if (value > 99) {
-    return boundToRange(value - 100);
+    count += Math.floor(value / 100);
+    if (previous < 0) {
+      count++;
+    }
+    return value % 100;
   } else {
+    if (value === 0) count++;
     return value;
   }
 };
@@ -17,11 +26,12 @@ data.reduce((previousValue, currentValue) => {
   const amount = Number(currentValue.slice(1));
   let result;
   if (addOrSubtract === "L") {
-    result = boundToRange(previousValue - amount);
+    // subtract from current
+    result = boundToRange(previousValue - amount, previousValue);
   } else {
-    result = boundToRange(previousValue + amount);
+    // add to current
+    result = boundToRange(previousValue + amount, previousValue);
   }
-  if (result === 0) count++;
   return result;
 }, 50);
 
