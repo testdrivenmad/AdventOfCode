@@ -6,22 +6,14 @@ const algorithmOne = () => {
     let highestJoltage = 0;
     let secondHighestJoltage = 0;
     let highestJoltageIndex = 0;
-    for (
-      let batteryIndex = 0;
-      batteryIndex < currentBankArray.length - 1;
-      batteryIndex++
-    ) {
+    for (let batteryIndex = 0; batteryIndex < currentBankArray.length - 1; batteryIndex++) {
       if (Number(currentBankArray[batteryIndex]) > highestJoltage) {
         highestJoltage = Number(currentBankArray[batteryIndex]);
         highestJoltageIndex = batteryIndex;
       }
     }
 
-    for (
-      let batteryIndex = highestJoltageIndex + 1;
-      batteryIndex < currentBankArray.length;
-      batteryIndex++
-    ) {
+    for (let batteryIndex = highestJoltageIndex + 1; batteryIndex < currentBankArray.length; batteryIndex++) {
       if (Number(currentBankArray[batteryIndex]) > secondHighestJoltage) {
         secondHighestJoltage = Number(currentBankArray[batteryIndex]);
       }
@@ -33,12 +25,21 @@ const algorithmOne = () => {
 };
 
 const algorithmTwo = () => {
-  const aggregate = data.reduce((previousValue, currentValue) => {
-    previousValue;
-    currentValue;
-    return previousValue;
+  const aggregate = data.reduce((joltageAggregator, currentBank) => {
+    const currentBankArray = `${currentBank}`.split("");
+    const maxBankJoltage: string[] = [currentBankArray[0]!];
+    let maxBatteryJoltageIndex = 0;
+    for (let maxBankJoltageIndex = 0; maxBankJoltageIndex < 12; maxBankJoltageIndex++) {
+      for (let currentBankIndex = maxBatteryJoltageIndex + 1; currentBankIndex < currentBankArray.length - (11 - maxBankJoltageIndex); currentBankIndex++) {
+        if (maxBankJoltage[maxBankJoltageIndex] === undefined || Number(currentBankArray[currentBankIndex]) > Number(maxBankJoltage[maxBankJoltageIndex])) {
+          maxBankJoltage[maxBankJoltageIndex] = currentBankArray[currentBankIndex]!;
+          maxBatteryJoltageIndex = currentBankIndex;
+        }
+      }
+    }
+    return joltageAggregator + Number(maxBankJoltage.join(""));
   }, 0);
   console.log("solution", aggregate);
 };
 
-algorithmOne();
+algorithmTwo();
