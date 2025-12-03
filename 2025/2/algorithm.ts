@@ -28,15 +28,17 @@ const algorithmTwo = () => {
     const numLast = Number(last);
     let addedValue = 0;
     for (let current = numFirst; current < numLast + 1; current++) {
-      let dumb = "";
+      let pattern = "";
       const currentString = `${current}`;
       for (const currentDigit of currentString) {
-        dumb += currentDigit;
-        const multiplier = currentString.length / dumb.length;
+        pattern += currentDigit;
+        if (pattern.length > currentString.length / 2) {
+          break;
+        }
+        const multiplier = currentString.length / pattern.length;
         if (
-          dumb.length !== currentString.length &&
           Number.isInteger(multiplier) &&
-          dumb.repeat(multiplier) === currentString
+          pattern.repeat(multiplier) === currentString
         ) {
           addedValue += current;
           break;
