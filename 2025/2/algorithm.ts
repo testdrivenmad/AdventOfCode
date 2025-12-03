@@ -30,6 +30,14 @@ const algorithmTwo = () => {
     for (let current = numFirst; current < numLast + 1; current++) {
       let pattern = "";
       const currentString = `${current}`;
+      if (
+        currentString.length % 2 === 0 &&
+        currentString.substring(0, currentString.length / 2) ===
+          currentString.substring(currentString.length / 2)
+      ) {
+        addedValue += current;
+        continue;
+      }
       for (const currentDigit of currentString) {
         pattern += currentDigit;
         if (pattern.length > currentString.length / 2) {
